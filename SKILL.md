@@ -35,7 +35,7 @@ Query data source collection://513993cb-23b6-4abc-900e-6f7f80d5827f ("PURYNN Con
 STEP 2 — CONTENT + DAILY FOCUS
 **4-card** outline (card 1 cover keyword-first → 2 middle cards → card 4 CTA ending "Save this · @purynn_official"), Instagram caption (3–4 short paragraphs, friendly, ends with a question), 12–16 hashtags mixing brand (#PURYNN #CERAPANO #SkinBarrier #BarrierCare #CleanBeauty) + topic + reach (#KBeauty #KoreanSkincare).
 
-IMAGE↔CONTENT MATCHING (required) — every card's image must match what its text says. In particular, when a card is about an INGREDIENT or benefit, show the PURYNN product that delivers it, as a 연출컷 (STEP 3c). Ingredient → product map:
+IMAGE↔CONTENT MATCHING (required) — every card's image must match what its text says. When a card is about an INGREDIENT or benefit, use EITHER (a) the PURYNN product that delivers it as a 연출컷 (STEP 3c), OR (b) an INGREDIENT-MOOD macro — a molecule render / serum bubbles / cream swatch / water-dew texture — rendered with `ingredient_card` (centered serif monogram + spaced full ingredient name, e.g. `CERA` / `CERAMIDE`, `PAN` / `PANTHENOL`). Mix both across the 4 cards for variety. Ingredient → product map (for the product option):
 - humectant / hydration / peptide / water-binding → **CERAPANO™ Peptide Hydration Toner** (`toner`)
 - occlusive / lipids / ceramide / barrier-seal / nourish → **CERAPANO™ Tri-Lipid Nourish Essence** (`essence`)
 - retinol / firming / anti-aging / renewal → **CERAPANO™ Retinol Firming Ampoule** (`ampoule`)
@@ -55,7 +55,7 @@ VISUAL SYSTEM — "dusty-blue editorial" (matches the approved reference grid): 
 Check `balance` first; if under 30 credits skip generation and use `editorial_card` (solid powder-blue) + `product_card` (real cutouts on MIST) only.
 Up to ~5 generations per run (person + ingredient days need fresh scenes). Poll `job_display` until completed; keep the `rawUrl` values.
   (a) PERSON — text-to-image beauty portrait: "editorial beauty portrait of an East Asian female model, soft matte natural skin, minimal makeup, calm expression, positioned toward the right/lower area, left + top empty for text" + the system tail.
-  (b) INGREDIENT / TEXTURE — text-to-image macro: e.g. "a single glass dropper releasing one translucent serum droplet" / "a smooth glossy white cream swatch smeared on a pale blue-grey surface" / "water beads on a glossy surface" + the system tail.
+  (b) INGREDIENT / TEXTURE — text-to-image macro for `ingredient_card`: a molecule render ("translucent glass-like spheres connected by slender bonds, floating") / serum bubbles ("translucent blue serum bubbles and glossy spheres") / cream swatch / water-dew, "balanced composition with a calm center" + the system tail. Pair with a centered monogram (CERA/PAN/HYA/GLU…) + full ingredient name.
   (c) PRODUCT 연출컷 (staged scenes) — the natural, label-safe recipe (this is what the client approved):
     1. In the sandbox, flatten the REAL cutout onto a clean WHITE background (soft contact shadow), 1080x1440. ⚠️ Do NOT pass the transparent cutout straight into img2img — the alpha edge produces a torn blue-splatter glitch. The white-bg flatten prevents that. For a pair, put both bottles on one white image.
     2. `media_upload` that white-bg image (png) → PUT → `media_confirm` (image) to get a reference media_id.
@@ -81,6 +81,7 @@ Renderer — use the EDITORIAL toolkit `PURYNN_피드_이미지/_assets/purynn_e
   * `photo_card(bg_path, kicker, title, body, idx, anchor="right", top_a, left_a, mw)` — PERSON / INGREDIENT cards over a veiled photo.
   * `product_card(kicker, title, body, idx, cutouts, bg=MIST)` — PRODUCT card; cutouts = list of (path, cx, bottom, height); real cutouts get a soft mirrored reflection.
   * `product_row_card(kicker, title, body, idx, paths)` — CTA row of all four products (even-gap packer + reflections).
+  * `ingredient_card(bg_path, kicker, mono, name, idx)` — INGREDIENT-mood card: centered serif monogram (e.g. `CERA`) + spaced full name (`CERAMIDE`) over a molecule / bubble / texture macro, with a soft center scrim. Use for ingredient cards when showing the ingredient feel instead of the bottle.
   * `editorial_card(kicker, title, body, idx, bg=POWDER)` — solid dusty-blue text card (Sun recap / brand statement; light text).
 - Keep title ≤ 2 short lines and body ≤ 1–2 lines; leave the lower/right clear for the hero. Products are the real cutouts (`toner/essence/ampoule/cream.png` fetched from the CDN), never AI-drawn.
 - Compose the day per STEP 2's focus (person / ingredient / product / editorial), keeping the carousel visually mixed.

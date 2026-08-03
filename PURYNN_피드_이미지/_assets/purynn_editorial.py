@@ -221,6 +221,46 @@ def staged_product_card(bg_path, cutouts, kicker, title, body, idx,
     return _text_block(im.convert("RGB"), kicker, title, body, idx, mw)
 
 
+def _center_scrim(im, strength=0.5):
+    yy, xx = np.mgrid[0:H, 0:W].astype(np.float32)
+    d = np.sqrt((xx / W - 0.5) ** 2 + (yy / H - 0.5) ** 2)
+    a = np.clip(strength * (1 - d * 1.5), 0, strength)
+    ov = np.zeros((H, W, 4), np.float32)
+    ov[:, :, 0:3] = 255
+    ov[:, :, 3] = a * 255
+    return Image.alpha_composite(im.convert("RGBA"),
+                                 Image.fromarray(ov.astype("uint8"), "RGBA")).convert("RGB")
+
+
+def _ctrk(d, cy, text, font, fill, tracking):
+    w = sum(d.textlength(c, font=font) + tracking for c in text) - tracking
+    x = (W - w) / 2
+    for c in text:
+        d.text((x, cy), c, font=font, fill=fill)
+        x += d.textlength(c, font=font) + tracking
+
+
+def ingredient_card(bg_path, kicker, mono, name, idx):
+    """INGREDIENT-mood card (matches the reference): centered serif monogram
+    (e.g. 'CERA') + spaced full name (e.g. 'CERAMIDE') over a molecule /
+    texture / bubble macro, with a soft center scrim for legibility.
+    Use when a card is about an ingredient and you'd rather show the ingredient
+    feel than the product bottle."""
+    im = _center_scrim(cover(bg_path, "center"), 0.52)
+    d = ImageDraw.Draw(im)
+    _ctrk(d, 505, kicker.upper(), F(SANS_B, 24), STEEL, 8)
+    mf = F(SERIF, 150)
+    mw = d.textlength(mono, font=mf)
+    d.text(((W - mw) / 2, 545), mono, font=mf, fill=INK)
+    d.line([(W / 2 - 46, 738), (W / 2 + 46, 738)], fill=LINE, width=2)
+    _ctrk(d, 772, name.upper(), F(SANS, 26), SUB, 9)
+    nf = F(SANS, 24)
+    n = f"{idx} / 4"
+    d.text((W - M - d.textlength(n, font=nf), H - 92), n, font=nf, fill=SUB)
+    trk(d, (M, H - 96), "PURYNN", F(SERIF, 32), STEEL, 9)
+    return im
+
+
 def editorial_card(kicker, title, body, idx, bg=POWDER):
     """Solid dusty-blue text card (recap / brand statement). Light text."""
     im = Image.new("RGB", (W, H), bg)
