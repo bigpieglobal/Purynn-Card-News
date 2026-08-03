@@ -35,12 +35,24 @@
 `PURYNN_피드_이미지/_assets/purynn_cards.py` — SKILL STEP 4 사양의 참조 구현.
 `products/manifest.json` — 신규 media_id + Toner/Essence 스왑 경고.
 
+## 🗓 스케줄
+
+- 등록 완료: **매일 09:00 KST (UTC 00:00, cron `0 0 * * *`)**, fresh-session 방식.
+  - Routine ID: `trig_011UeMNUajrYYfH6E8wYR1oJ` · 첫 실행 2026-08-04 09:03 KST
+  - 발화 시 저장소가 클론된 새 세션에서 `SKILL.md`를 읽어 STEP 1~8을 자동 실행.
+
+> ⚠️ **커넥터 확인 필요 (중요):** 이 방식으로 만든 Routine은 발화되는 새 세션에
+> Higgsfield·Notion **커넥터(mcp__* 도구)가 붙지 않을 수 있습니다.** 그러면 렌더/업로드/
+> Notion 기록이 불가해 실행이 실패합니다. 가장 확실한 방법은 **claude.ai Routines UI에서**
+> 이 Routine을 열어 Higgsfield·Notion 커넥터를 연결하는 것입니다. 8/4 첫 실행 결과를 보고
+> Notion에 새 페이지가 생기면 정상, 안 생기면 UI에서 커넥터를 붙여 주세요.
+
 ## ⏳ 남은 수동 단계
 
-- [ ] **스케줄 등록**: 이 계정에서 `purynn-daily-cardnews` 일일 작업 등록 (원하는 시각).
-      Claude(claude.ai/code)의 스케줄/Routine 기능 또는 요청 시 이 세션에서 등록 가능.
 - [ ] **구 계정 스케줄 해제**: 두 계정이 동시에 켜져 있으면 같은 날 서로 다른 주제로
-      이중 발행 + 로그 미공유로 중복이 발생합니다. 반드시 구 작업을 끄세요.
+      이중 발행 + 로그 미공유로 중복이 발생합니다. 반드시 구 작업을 끄세요. (구 계정은
+      이 세션에서 접근 불가 — 직접 해제해야 합니다.)
+- [ ] **위 커넥터 확인** (Routines UI에서 Higgsfield·Notion 연결 확인).
 - [ ] (선택) 구 Notion DB Export/Import로 캡션·해시태그 이력까지 무손실 이관.
 - [ ] (선택) 회사 드라이브에 `PURYNN_피드_이미지` 폴더 사본 유지 시 원본 누끼 PNG를
       `_assets/products/`에 넣기 (STEP 5 로컬 마스터용). 스왑 주의.
