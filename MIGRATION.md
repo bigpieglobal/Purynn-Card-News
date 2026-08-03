@@ -17,14 +17,21 @@
 - 크레딧: **605 (pro)** — 구 계정 2.84 대비 충분. 월 150+ 요구사항 충족.
 
 ### 2. Notion "PURYNN Content Log" DB
-동일 스키마로 회사 워크스페이스에 생성 + 과거 35개 주제명 시드(중복 방지).
+동일 스키마로 생성 + 과거 35개 주제명 시드(중복 방지) + 오늘 검증본 1건.
 
-- 신규 data_source_id: `966d82e0-aa69-4bb1-af02-e0dfa7eac741`
-- DB URL: https://app.notion.com/p/3cecc61f56224621b3f316a6ee0c2650
+- 신규 data_source_id: `513993cb-23b6-4abc-900e-6f7f80d5827f`
+- DB URL: https://app.notion.com/p/62b4bd3ee69e4612bfdaebf11e8e7502
+- 워크스페이스: **팀 해외영업의 Notion** (`d11f1f3b`, bigpie_global@jungdari.com) — Claude 커넥터가 현재 연결된 곳.
 - 시드된 35개 주제는 Status=`Posted`, Sources=`Migrated history · old account`.
+- 검증본 *Humectant vs Occlusive* (카드 5장): https://app.notion.com/p/3b1d6ae3e67381b09e45f4a2827f3aa5
 
-> ⚠️ 캡션·해시태그까지 무손실로 옮기려면 구 워크스페이스에서 Export(Markdown & CSV) → Import 하세요.
-> 지금은 중복 방지를 위해 **주제명만** 시드된 상태입니다.
+> ⚠️ **원하는 위치가 다른 워크스페이스(`6877433a`)라면:** Claude 커넥터가 그 워크스페이스에는 설치돼
+> 있지 않아 직접 쓰기가 불가능했습니다. 위 DB를 Notion에서 **"Move to"(Ctrl+Shift+P)** 로 그 워크스페이스의
+> 원하는 페이지 아래로 옮긴 뒤, 옮긴 DB의 새 data_source_id로 SKILL.md STEP 1·6과 Routine을 갱신하면 됩니다
+> (요청 주시면 갱신해 드립니다).
+>
+> ⚠️ 초기에 `연구개발팀`(bigpie_up) 워크스페이스에 만들었던 임시 DB(`3cecc61f…`)는 커넥터 전환으로
+> 접근 불가 — 필요 없으면 그 워크스페이스에서 수동 삭제하세요.
 
 ### 3. SKILL.md
 플레이스홀더 9개를 모두 실제 값으로 채워 저장소 루트에 커밋. 원본 대비 반영된 수정:
@@ -68,5 +75,5 @@
 | essence media_id | `bba2814f-6e5d-4cbc-bb44-b13477f3f157` | `0a1e7932-be79-4b95-a9aa-8446ec9c3e23` |
 | ampoule media_id | `4ca80d62-2d26-49d7-97ac-8415f10bb8c2` | `4b91cb95-a81b-4251-9733-5dcfc143f1d7` |
 | cream media_id | `7c75b4bf-266d-467a-acd8-9ade6ee5d22c` | `e224b5db-0ff6-4279-92d2-84b86af9c719` |
-| Notion data_source_id | `a0f96979-3a24-4f76-81a5-1aa13e440b63` | `966d82e0-aa69-4bb1-af02-e0dfa7eac741` |
+| Notion data_source_id | `a0f96979-3a24-4f76-81a5-1aa13e440b63` | `513993cb-23b6-4abc-900e-6f7f80d5827f` |
 | Higgsfield MCP ID | `b8d0973c-ba93-41f3-b5a2-ddbb801438df` | `HIGGSFIELD` (이름 기반) |
