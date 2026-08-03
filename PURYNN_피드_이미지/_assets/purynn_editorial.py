@@ -109,6 +109,15 @@ def _scaleh(im, h):
     return im.resize((max(1, round(w0 * h / h0)), h), Image.LANCZOS)
 
 
+def restore_brand_teal(im):
+    """Snap dulled PURYNN teal back to (73,180,209). Run on every img2img
+    product 연출컷 scene — the model shifts the teal toward grey."""
+    a = np.asarray(im.convert("RGB")).astype(int)
+    r, g, b = a[..., 0], a[..., 1], a[..., 2]
+    a[(b - r > 35) & (b > 70) & (g > r)] = [73, 180, 209]
+    return Image.fromarray(a.astype("uint8"), "RGB")
+
+
 def wordmark(d):
     trk(d, (M, H - 96), "PURYNN", F(SERIF, 32), STEEL, 9)
 
