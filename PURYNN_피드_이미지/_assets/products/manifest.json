@@ -1,0 +1,41 @@
+{
+  "_comment": "PURYNN permanent product cutouts. IMPORTANT: in the ORIGINAL cutout folder (누끼컷/누끼/) Toner.png and Essesnce.png are SWAPPED. The copies in this _assets/products/ folder are the CORRECTED versions — always use these. If you ever regenerate from the originals, swap toner/essence back or cards will ship with the product names reversed.",
+  "account": "company / 연구개발팀 (bigpie_up@jungdari.com)",
+  "migrated": "2026-08-03 (copied from old public CDN to new Higgsfield account)",
+  "cdn_base": "https://d2ol7oe51mr4n9.cloudfront.net/user_2zrIhlq0Y8juUmY7o3n04KjTZBJ",
+  "logo": {
+    "file": "../purynn_logo.png",
+    "media_id": "335fd260-0463-4ea9-8e01-5ce97f8c214d",
+    "note": "Stored PNG is padded; renderer trims by alpha bbox then resizes to 226x119."
+  },
+  "products": [
+    {
+      "key": "toner",
+      "name": "CERAPANO™ Peptide Hydration Toner",
+      "size": "100 ml / 3.38 fl. oz.",
+      "file": "toner.png",
+      "media_id": "bd0b4760-35fb-48d4-8693-8c506974f0fd"
+    },
+    {
+      "key": "essence",
+      "name": "CERAPANO™ Tri-Lipid Nourish Essence",
+      "size": "100 ml / 3.38 fl. oz.",
+      "file": "essence.png",
+      "media_id": "0a1e7932-be79-4b95-a9aa-8446ec9c3e23"
+    },
+    {
+      "key": "ampoule",
+      "name": "CERAPANO™ Retinol Firming Ampoule",
+      "size": "50 ml / 1.69 fl. oz.",
+      "file": "ampoule.png",
+      "media_id": "4b91cb95-a81b-4251-9733-5dcfc143f1d7"
+    },
+    {
+      "key": "cream",
+      "name": "CERAPANO™ Glutathione Mela Cream",
+      "size": "50 ml / 1.69 fl. oz.",
+      "file": "cream.png",
+      "media_id": "e224b5db-0ff6-4279-92d2-84b86af9c719"
+    }
+  ]
+}
