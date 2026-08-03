@@ -24,7 +24,7 @@ Quick use:
 """
 
 import numpy as np
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw, ImageFont, ImageFilter
 
 W, H = 1080, 1440
 M = 96
@@ -187,6 +187,38 @@ def product_row_card(kicker, title, body, idx, paths, bg=MIST,
         x += c.width + gap
     im = im.convert("RGB")
     return _text_block(im, kicker, title, body, idx, mw=720)
+
+
+def _contact_shadow(base_rgba, cx, by, w, alpha=0.30):
+    L = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    ImageDraw.Draw(L).ellipse([cx - w / 2, by - 28, cx + w / 2, by + 28],
+                              fill=(24, 32, 46, int(255 * alpha)))
+    base_rgba.alpha_composite(L.filter(ImageFilter.GaussianBlur(26)))
+
+
+def _place_on_set(base_rgba, cut, cx, bottom, refl=0.15):
+    cut = cut.convert("RGBA")
+    x = round(cx - cut.width / 2)
+    _contact_shadow(base_rgba, cx, bottom - 6, cut.width * 1.15)
+    if refl > 0:
+        fl = cut.transpose(Image.FLIP_TOP_BOTTOM)
+        a = np.array(fl.split()[-1]).astype(np.float32)
+        g = np.clip(np.linspace(refl, 0, fl.height), 0, 1)[:, None]
+        fl.putalpha(Image.fromarray((a * g).astype("uint8"), "L"))
+        base_rgba.alpha_composite(fl, (x, bottom))
+    base_rgba.alpha_composite(cut, (x, bottom - cut.height))
+
+
+def staged_product_card(bg_path, cutouts, kicker, title, body, idx,
+                        top_a=0.45, left_a=0.5, refl=0.15, mw=560):
+    """PRODUCT 연출컷 (staged): real cutouts composited onto an AI-generated
+    EMPTY styled set (stone ledge / linen) with contact shadow + reflection.
+    Label-safe (no img2img on the bottle) and glitch-free.
+    cutouts = list of (path, cx, bottom, height)."""
+    im = veil(cover(bg_path, "center"), top_a, left_a).convert("RGBA")
+    for path, cx, bottom, height in cutouts:
+        _place_on_set(im, _scaleh(_trim(Image.open(path)), height), cx, bottom, refl)
+    return _text_block(im.convert("RGB"), kicker, title, body, idx, mw)
 
 
 def editorial_card(kicker, title, body, idx, bg=POWDER):
